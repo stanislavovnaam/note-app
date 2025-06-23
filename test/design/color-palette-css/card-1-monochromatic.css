@@ -1,0 +1,49 @@
+:root{
+    --primary-colorm: #c8c8ff;
+    --secondary-colorm: #716d81;
+    --tertiary-colorm: #4e4e8b;
+}
+.card-1m {
+     border-radius: 10px;
+     overflow: hidden;
+     box-shadow: 0px 8px 5px rgba(0, 0, 0, 0.35);
+     transition-duration: 0.3s;
+ }
+
+ .card-1m:hover {
+     transform: scale(1.05);
+ }
+
+ .card-1m:active {
+     transform: scale(0.95);
+ }
+
+ .card-1m-frame {
+     width: 300px;
+     height: 200px;
+     overflow: hidden;
+     color: var(--tertiary-colormm);
+ }
+
+ .card-1m-img {
+     object-fit: cover;
+ }
+
+ .card-1m-text {
+     background-color: var( --secondary-colorm);
+     width: 100%;
+     padding: 15px;
+ }
+
+ .card-1m-title {
+     font-family: serif;
+     font-weight: 700;
+     color: var(--primary-colorm);
+     font-size: 18px;
+ }
+
+ .card-1m-info {
+     font-size: 14px;
+     color: var(--tertiary-colorm);
+      line-height: 2.1;
+ }
