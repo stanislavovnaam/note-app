@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .grayscaleUI {
+            background-color: dimgray;
+            color: white;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            padding: 12px;
+            border-style: double;
+            border-color: darkgray;
+            box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.35)
+        }
+
+        main {
+            background-color: darkred;
+            color: lightyellow;
+            height: 2000px;
+            font-size: 150px;
+            /*filter: grayscale(100%)*/
+        }
+
+    </style>
+</head>
+
+<body>
+    <main>
+        tydgsh jfdtdg
+    </main>
+    <div class="grayscaleUI">
+        <input type="range" id="graySlider" value="0" min="0" max="100" oninput="applyGrayFilter()"> <span id="grayscaleSliderValue">0%</span>
+    </div>
+
+    <script>
+        function applyGrayFilter() {
+            var graySlider = document.querySelector("#graySlider")
+            var grayValue = graySlider.value
+            
+            var main = document.querySelector("main")
+
+            var graySliderValue = document.querySelector("#grayscaleSliderValue")
+
+            graySliderValue.textContent = grayValue + "%"
+            
+            main.style.filter = `grayscale(${grayValue}%)`
+
+            console.log(grayValue)
+        }
+
+    </script>
+</body>
+
+</html>
