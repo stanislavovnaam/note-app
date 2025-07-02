@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Модальное окно</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vw;
+        }
+        #modal{
+            height: 100vw;
+        }
+
+        #modal-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        #btn-delete {
+            font-size: 24px;
+            background-color: red;
+            flex-grow: 1;
+        }
+
+        #btn-save {
+            font-size: 24px;
+            background-color: green;
+            flex-grow: 2;
+        }
+        
+        #note-text{
+            width: 100%;
+            height: 100%;
+            resize: none;
+            font-size: 24px;
+        }
+        #note-name{
+            font-size: 32px;
+            text-align: center;
+        }
+        #back-btn{
+            position: absolute;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+  <div id="modal">
+      <button id="back-btn">&lt;</button>
+       <div id="note-name">Заметка</div>
+        <textarea id="note-text"></textarea>
+        <div id="modal-buttons">
+            <button id="btn-delete">Удалить</button>
+            <button id="btn-save">Сохранить</button>
+        </div>
+  </div>
+</body></html>

@@ -10,6 +10,10 @@
             margin: 0;
         }
 
+        h1 {
+            text-align: center;
+        }
+
         #note-gallery {
             background-color: gray;
             width: 100%;
@@ -25,11 +29,21 @@
             height: 200px;
             width: 200px;
             border-style: solid;
-            overflow:hidden;
+            overflow: hidden;
         }
 
         .note-delete-container {
             text-align: right;
+        }
+
+        #note-add-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            font-size: 60px;
         }
     </style>
 </head>
@@ -44,9 +58,11 @@
             <div class="note-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque accusantium iusto quia, amet ad, minima id nobis porro cupiditate maiores. Cupiditate tempore quo rerum sit, impedit aut asperiores velit, dignissimos, accusamus, dolorum itaque explicabo iusto. Deleniti totam asperiores voluptatem iste facilis eligendi, provident corrupti dicta.</div>
         </div>
     </div>
+    <button id="note-add-btn">+</button>
+
     <script>
         var note = document.querySelector("#note-gallery").innerHTML
-        
+
         /*
         функциональные требования:
             1. обращение к шаблону
@@ -58,13 +74,12 @@
         */
         var i = 0
         var end = 8
-        
-        while (i < end){
+
+        while (i < end) {
             document.querySelector("#note-gallery").innerHTML += note
             console.log(note)
-            
+
             i++
         }
-        
     </script>
 </body></html>

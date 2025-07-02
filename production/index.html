@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Note App</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+
+<body>
+    <!-- главная страница -->
+    <div id="main">
+        <h1>Note App</h1>
+        <div id="note-gallery">
+
+        </div>
+        <button id="note-add-btn" onclick="OpenModal()">+</button>
+    </div>
+
+    <!-- модальное окно -->
+    <div id="modal">
+        <button id="back-btn" onclick="CloseModal()">&lt;</button>
+        <div id="note-name">Заметка</div>
+        <textarea id="note-text"></textarea>
+        <div id="modal-buttons">
+            <button id="btn-delete" onclick="">Удалить</button>
+            <button id="btn-save" onclick="SaveNote()">Сохранить</button>
+        </div>
+    </div>
+
+    <script>
+        var noteIndex = localStorage.getItem("na_noteIndex")
+        if (noteIndex === null) {
+            noteIndex = 0
+        }
+
+        function DevCreateNotes(end) {
+            var text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque accusantium iusto quia, amet ad, minima id nobis porro cupiditate maiores. Cupiditate tempore quo rerum sit, impedit aut asperiores velit, dignissimos, accusamus, dolorum itaque explicabo iusto. Deleniti totam asperiores voluptatem iste facilis eligendi, provident corrupti dicta."
+            var note = `
+                <div class="note">
+                <div class="note-delete-container">
+                    <button class="note-delete">X</button>
+                </div>
+                <div class="note-content">${text}</div>
+            </div>`
+
+            var i = 0
+
+            while (i < end) {
+                document.querySelector("#note-gallery").innerHTML += note
+                console.log(note)
+
+                i++
+            }
+        }
+        //DevCreateNotes(3)
+
+        function OpenModal() {
+            var main = document.querySelector("#main")
+            var modal = document.querySelector("#modal")
+
+            main.style.display = "none"
+            modal.style.display = "block"
+        }
+
+        function CloseModal() {
+            var main = document.querySelector("#main")
+            var modal = document.querySelector("#modal")
+
+            main.style.display = "block"
+            modal.style.display = "none"
+        }
+        var noteIndex = 0
+
+        function SaveNote() {
+            var textArea = document.querySelector("#note-text")
+            var text = textArea.value
+
+            document.querySelector("#note-gallery").innerHTML += `
+                <div class="note">
+                <div class="note-delete-container">
+                    <button class="note-delete">X</button>
+                </div>
+                <div class="note-content">${text}</div>
+            </div>`
+
+            textArea.value = ""
+
+            CloseModal()
+
+            localStorage.setItem("na_note" + noteIndex, text)
+            noteIndex++
+            localStorage.setItem("na_noteIndex", noteIndex)
+        }
+
+        function LoadNote() {
+            var gallery = document.querySelector("#note-gallery")
+            var i = 0
+            noteIndex = localStorage.getItem("na_noteIndex")
+            if (noteIndex === null) {
+                noteIndex = 0
+            }
+            console.log(noteIndex)
+            while (i < noteIndex) {
+                var text = localStorage.getItem("na_note" + i)
+
+                gallery.innerHTML += `
+                <div class="note">
+                <div class="note-delete-container">
+                    <button class="note-delete">X</button>
+                </div>
+                <div class="note-content">${text}</div>
+            </div>`
+                i++
+            }
+        }
+        LoadNote()
+    </script>
+</body></html>
