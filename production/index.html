@@ -36,27 +36,6 @@
             noteIndex = 0
         }
 
-        function DevCreateNotes(end) {
-            var text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque accusantium iusto quia, amet ad, minima id nobis porro cupiditate maiores. Cupiditate tempore quo rerum sit, impedit aut asperiores velit, dignissimos, accusamus, dolorum itaque explicabo iusto. Deleniti totam asperiores voluptatem iste facilis eligendi, provident corrupti dicta."
-            var note = `
-                <div class="note">
-                <div class="note-delete-container">
-                    <button class="note-delete">X</button>
-                </div>
-                <div class="note-content">${text}</div>
-            </div>`
-
-            var i = 0
-
-            while (i < end) {
-                document.querySelector("#note-gallery").innerHTML += note
-                console.log(note)
-
-                i++
-            }
-        }
-        //DevCreateNotes(3)
-
         function OpenModal() {
             var main = document.querySelector("#main")
             var modal = document.querySelector("#modal")
@@ -79,9 +58,10 @@
             var text = textArea.value
 
             document.querySelector("#note-gallery").innerHTML += `
-                <div class="note">
+                <div class="note" onclick="EditNote()">
                 <div class="note-delete-container">
-                    <button class="note-delete">X</button>
+                    <input type="checkbox">
+                    <button class="note-delete" onclick="DeleteNote()">X</button>
                 </div>
                 <div class="note-content">${text}</div>
             </div>`
@@ -97,6 +77,8 @@
 
         function LoadNote() {
             var gallery = document.querySelector("#note-gallery")
+            gallery.innerHTML = ""
+
             var i = 0
             noteIndex = localStorage.getItem("na_noteIndex")
             if (noteIndex === null) {
@@ -105,16 +87,64 @@
             console.log(noteIndex)
             while (i < noteIndex) {
                 var text = localStorage.getItem("na_note" + i)
+                if (text != null) {
 
-                gallery.innerHTML += `
-                <div class="note">
+                    gallery.innerHTML += `
+                <div class="note" onclick="EditNote()">
                 <div class="note-delete-container">
-                    <button class="note-delete">X</button>
+                    <input type="checkbox">
+                    <button class="note-delete" onclick="DeleteNote()">X</button>
                 </div>
                 <div class="note-content">${text}</div>
             </div>`
+                }
+                i++
+
+            }
+        }
+
+        function DeleteNote() {
+            console.log("delete")
+            var notes = document.querySelectorAll(".note")
+            console.log(notes)
+
+            var i = 0
+            while (i < notes.length) {
+                var note = notes[i]
+                if (note === undefined) {
+                    continue
+                    i++
+                }
+
+
+                var checkbox = note.querySelector("input")
+
+                if (checkbox.checked === true) {
+                    var valueToDelete = note.querySelector(".note-content").textContent
+
+                    console.log("valueToDelete:", valueToDelete)
+
+                    var i = 0
+                    while (i < noteIndex) {
+                        var key = "na_note" + i
+                        var savedNote = localStorage.getItem(key)
+
+                        if (savedNote != null) {
+                            if (savedNote === valueToDelete) {
+                                localStorage.removeItem(key)
+                            }
+                        }
+                        i++
+                    }
+
+                }
                 i++
             }
+            LoadNote()
+        }
+        
+        function EditNote(){
+            console.log("edit note")
         }
         LoadNote()
     </script>

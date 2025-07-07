@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #n1 {
+            background-color: palevioletred;
+        }
+
+        #n2 {
+            background-color: darkred;
+        }
+
+        #n3 {
+            background-color: red;
+        }
+
+        #n1,
+        #n2,
+        #n3 {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="n1" onclick="n1()">
+        <div id="n2" onclick="n2"()>
+            <div id="n3" onclick="n3()"></div>
+        </div>
+    </div>
+
+    <script>
+        function n1() {
+            console.log("palevioletred")
+        }
+
+        function n2() {
+            console.log("darkred")
+        }
+
+        function n3() {
+            console.log("red")
+            Event.stopPropagation()
+        }
+    </script>
+</body></html>
