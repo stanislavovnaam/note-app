@@ -29,9 +29,17 @@
             <button id="btn-save" onclick="SaveNote()">Сохранить</button>
         </div>
     </div>
-
+    <!-- Меню управления -->
+    
+    <div id="control-menu">
+            <button id="cntr-menu-delete" onclick="DeleteNote()">Удалить</button>
+        </div>
     <script>
         var noteIndex = localStorage.getItem("na_noteIndex")
+        
+        var controlMenu = document.querySelector("#control-menu")
+        controlMenu.style.display = "none"
+        
         if (noteIndex === null) {
             noteIndex = 0
         }
@@ -60,8 +68,7 @@
             document.querySelector("#note-gallery").innerHTML += `
                 <div class="note" onclick="EditNote()">
                 <div class="note-delete-container">
-                    <input type="checkbox">
-                    <button class="note-delete" onclick="DeleteNote()">X</button>
+                    <input type="checkbox" onclick="ShowControlMenu()">
                 </div>
                 <div class="note-content">${text}</div>
             </div>`
@@ -92,8 +99,7 @@
                     gallery.innerHTML += `
                 <div class="note" onclick="EditNote()">
                 <div class="note-delete-container">
-                    <input type="checkbox">
-                    <button class="note-delete" onclick="DeleteNote()">X</button>
+                    <input type="checkbox" onclick="ShowControlMenu()">
                 </div>
                 <div class="note-content">${text}</div>
             </div>`
@@ -142,10 +148,32 @@
             }
             LoadNote()
         }
-        
-        function EditNote(){
+
+        function EditNote() {
             console.log("edit note")
         }
+        
+        function ShowControlMenu(){
+            var boxChecked = false
+            
+            var checkboxes = document.querySelectorAll(".note input")
+            
+            var i = 0
+            while(i < checkboxes.length){
+                if(checkboxes[i].checked){
+                    boxChecked = true
+                    break
+                }
+                i++
+            }
+            
+            if(boxChecked){
+                controlMenu.style.display = "block"
+            }else{
+                controlMenu.style.display = "none"
+            }
+        }
+        
         LoadNote()
     </script>
 </body></html>
