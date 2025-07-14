@@ -30,16 +30,19 @@
         </div>
     </div>
     <!-- Меню управления -->
-    
+
     <div id="control-menu">
-            <button id="cntr-menu-delete" onclick="DeleteNote()">Удалить</button>
-        </div>
+        <button id="cntr-menu-delete" onclick="DeleteNote()">Удалить</button>
+    </div>
     <script>
         var noteIndex = localStorage.getItem("na_noteIndex")
-        
+
         var controlMenu = document.querySelector("#control-menu")
         controlMenu.style.display = "none"
-        
+
+        var selectedNoteIndex
+        var editMode = false
+
         if (noteIndex === null) {
             noteIndex = 0
         }
@@ -55,6 +58,7 @@
         function CloseModal() {
             var main = document.querySelector("#main")
             var modal = document.querySelector("#modal")
+            document.querySelector("#note-text").value = ""
 
             main.style.display = "block"
             modal.style.display = "none"
@@ -65,21 +69,29 @@
             var textArea = document.querySelector("#note-text")
             var text = textArea.value
 
-            document.querySelector("#note-gallery").innerHTML += `
-                <div class="note" onclick="EditNote()">
+            if (editMode) {
+                textArea.value = ""
+                CloseModal()
+                localStorage.setItem("na_note" + selectedNoteIndex, text)
+                LoadNote()
+            } else {
+
+                document.querySelector("#note-gallery").innerHTML += `
+                <div class="note" onclick="EditNote(this)">
                 <div class="note-delete-container">
-                    <input type="checkbox" onclick="ShowControlMenu()">
+                    <input type="checkbox" onclick="event.stopPropagation(); ShowControlMenu()">
                 </div>
                 <div class="note-content">${text}</div>
             </div>`
 
-            textArea.value = ""
+                textArea.value = ""
 
-            CloseModal()
+                CloseModal()
 
-            localStorage.setItem("na_note" + noteIndex, text)
-            noteIndex++
-            localStorage.setItem("na_noteIndex", noteIndex)
+                localStorage.setItem("na_note" + noteIndex, text)
+                noteIndex++
+                localStorage.setItem("na_noteIndex", noteIndex)
+            }
         }
 
         function LoadNote() {
@@ -91,15 +103,14 @@
             if (noteIndex === null) {
                 noteIndex = 0
             }
-            console.log(noteIndex)
             while (i < noteIndex) {
                 var text = localStorage.getItem("na_note" + i)
                 if (text != null) {
 
                     gallery.innerHTML += `
-                <div class="note" onclick="EditNote()">
+                <div class="note" onclick="EditNote(this)">
                 <div class="note-delete-container">
-                    <input type="checkbox" onclick="ShowControlMenu()">
+                    <input type="checkbox" onclick="event.stopPropagation(); ShowControlMenu()">
                 </div>
                 <div class="note-content">${text}</div>
             </div>`
@@ -110,7 +121,6 @@
         }
 
         function DeleteNote() {
-            console.log("delete")
             var notes = document.querySelectorAll(".note")
             console.log(notes)
 
@@ -130,9 +140,9 @@
 
                     console.log("valueToDelete:", valueToDelete)
 
-                    var i = 0
-                    while (i < noteIndex) {
-                        var key = "na_note" + i
+                    var j = 0
+                    while (j < noteIndex) {
+                        var key = "na_note" + j
                         var savedNote = localStorage.getItem(key)
 
                         if (savedNote != null) {
@@ -140,40 +150,83 @@
                                 localStorage.removeItem(key)
                             }
                         }
-                        i++
+                        j++
                     }
 
                 }
                 i++
             }
             LoadNote()
+            ShowControlMenu()
         }
 
-        function EditNote() {
-            console.log("edit note")
-        }
-        
-        function ShowControlMenu(){
-            var boxChecked = false
-            
-            var checkboxes = document.querySelectorAll(".note input")
-            
+        function EditNote(noteElement) {
+            console.log("edit note", noteElement)
+            console.log(noteElement.querySelector(".note-content").textContent)
+
+            /*
+            1. onclick +
+            2. получение выбранной заметки +
+            3. открыть модальное окно +
+            4. текст заметки вставить в модальное окно+
+            5. определить индекс заметки в бд +
+            6. пересохранить заметку в бд
+            7. показать заметки заново      
+            */
+
+            OpenModal()
+
+            var editText = noteElement.querySelector(".note-content").textContent
+            var noteText = document.querySelector("#note-text")
+            noteText.value = editText
+
             var i = 0
-            while(i < checkboxes.length){
-                if(checkboxes[i].checked){
+
+            while (i < noteIndex) {
+                var key = "na_note" + i
+                var editNote = localStorage.getItem(key)
+
+                console.log | (editNote)
+
+                if (editText === editNote) {
+                    selectedNoteIndex = i
+                    editMode = true
+                    break
+                }
+
+                i++
+            }
+        }
+
+        function ShowControlMenu() {
+            var boxChecked = false
+
+            var checkboxes = document.querySelectorAll(".note input")
+
+            var addBtn = document.querySelector("#note-add-btn")
+
+            var i = 0
+            while (i < checkboxes.length) {
+                if (checkboxes[i].checked) {
                     boxChecked = true
                     break
                 }
                 i++
             }
-            
-            if(boxChecked){
+
+            if (boxChecked) {
                 controlMenu.style.display = "block"
-            }else{
+                addBtn.style.display = "none"
+            } else {
                 controlMenu.style.display = "none"
+                addBtn.style.display = "block"
+
             }
         }
-        
+
         LoadNote()
+
     </script>
-</body></html>
+</body>
+
+</html>
