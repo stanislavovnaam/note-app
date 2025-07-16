@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            background-color: #ff7fe6;
+        }
+
+        .box {
+            width: 400px;
+            height: 400px;
+            background-color: rgba(216, 0, 255, 0.6);
+            margin: 25px auto;
+        }
+
+        #open-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            animation: none;
+            animation-duration: 0.5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            z-index: 1;
+        }
+
+        @keyframes Expand {
+            0% {
+                width: 50px;
+                height: 50px;
+                opacity: 1;
+            }
+
+            80% {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                right: 0;
+                opacity: 0;
+            }
+
+            100% {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                right: 0;
+                display: none;
+                opacity: 0;
+
+            }
+        }
+
+        #modal {
+            background-color: aliceblue;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: none;
+            animation-duration: 1s;
+            opacity: 0;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes Appear {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <button onclick="Open()" id="open-btn">click me!</button>
+
+
+    <div id="modal">
+        <textarea id="textbox"></textarea>
+    </div>
+    <script>
+        function Open() {
+            document.querySelector("#open-btn").style.animationName = "Expand"
+            document.querySelector("#modal").style.animationName = "Appear"
+        }
+
+    </script>
+</body>
+
+</html>
