@@ -2,7 +2,7 @@
     background-color: rgba(0, 0, 0, 0.35);
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
@@ -12,7 +12,7 @@
 }
 
 #confirm-box {
-    background-color: #8e8e8e;
+    background-color:var(--p-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,7 +27,8 @@
 #confirm-icon {
     width: 60px;
     height: 60px;
-    background-color: white;
+    background-color: var(--s-color);
+    color:var(--accent-1) ;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,13 +45,15 @@
 }
 
 #confirm-buttons #yes-btn {
-    background-color: green;
+    background-color: var(--button-bg-1);
+    border-color: var(--button-text-1);
     padding: 5px 50px;
     font-size: 16px;
 }
 
 #confirm-buttons #no-btn {
-    background-color: red;
+    background-color: var(--button-bg-2);
+     border-color: var(--button-text-2);
     padding: 5px 50px;
     font-size: 16px;
 }

@@ -48,10 +48,15 @@
 }
 
 @keyframes DeleteBtnAnim{
-    0%{
-        
-    }
     100%{
         border-radius: 0;
+        background-color: var(--button-bg-2);
+         border-color: var(--button-text-2)
+    }
+}
+
+@keyframes DeleteIconAnim{
+    100%{
+        transform: rotateZ(45deg)
     }
 }
